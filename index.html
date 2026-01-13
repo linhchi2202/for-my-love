@@ -20,6 +20,7 @@
     .box {
       text-align: center;
       padding: 20px;
+      max-width: 90%;
     }
 
     .text {
@@ -96,17 +97,33 @@
     <button id="btn" onclick="next()">Press here ❤️</button>
   </div>
 
+  <!-- 🎵 NHẠC LOCAL (UPLOAD TRONG REPO) -->
+  <audio id="music" preload="auto">
+    <source src="photograph.mp3" type="audio/mpeg">
+  </audio>
+
   <script>
     let step = 0;
     const texts = ["t0","t1","t2","t3","t4","t5"];
+    let musicStarted = false;
 
     function next() {
+      const music = document.getElementById("music");
+
+      // phát nhạc lần đầu
+      if (!musicStarted) {
+        music.volume = 0.8;
+        music.play().catch(() => {});
+        musicStarted = true;
+      }
+
       if (step < texts.length - 1) {
         document.getElementById(texts[step]).style.display = "none";
         step++;
         document.getElementById(texts[step]).style.display = "block";
       }
 
+      // tới đoạn cuối
       if (step === texts.length - 1) {
         document.getElementById("btn").style.display = "none";
         setInterval(createHeart, 300);
