@@ -2,29 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>For Min Min ❤️</title>
 
   <style>
     body {
       margin: 0;
-      min-height: 100vh;
-      background: radial-gradient(circle, #ffe6ee, #ffffff);
+      height: 100vh;
+      background: linear-gradient(#ffe6ee, #ffffff);
       font-family: Arial, sans-serif;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
+    }
+
+    .box {
+      text-align: center;
       padding: 20px;
     }
 
-    h1 {
-      margin-top: 35vh;
-      font-size: 36px;
+    .text {
+      font-size: 30px;
       color: #ff4d6d;
+      display: none;
+      line-height: 1.6;
+    }
+
+    .final {
+      font-size: 42px;
+      font-weight: bold;
+      color: #ff1493;
     }
 
     button {
       margin-top: 30px;
-      padding: 16px 40px;
+      padding: 14px 36px;
       font-size: 20px;
       border: none;
       border-radius: 30px;
@@ -33,31 +46,11 @@
       cursor: pointer;
     }
 
-    .text {
-      font-size: 32px;
-      color: #ff4d6d;
-      opacity: 0;
-      transition: opacity 1.5s;
-      margin-top: 120px;
-      line-height: 1.6;
-    }
-
-    .show {
-      opacity: 1;
-    }
-
-    .final {
-      font-size: 46px;
-      font-weight: bold;
-      color: #ff1493;
-      text-shadow: 0 0 20px pink;
-    }
-
     .heart {
       position: fixed;
       bottom: -20px;
-      font-size: 24px;
-      animation: floatUp 6s linear forwards;
+      font-size: 22px;
+      animation: floatUp 5s linear forwards;
       pointer-events: none;
     }
 
@@ -72,47 +65,52 @@
 
 <body>
 
-  <!-- LUÔN HIỆN -->
-  <div id="start">
-    <h1>Hey Min Min 💖</h1>
-    <button id="startBtn">Press here ❤️</button>
+  <div class="box">
+    <div id="t0" class="text" style="display:block">
+      Hey Min Min 💖
+    </div>
+
+    <div id="t1" class="text">
+      From the moment you came into my life,<br>
+      everything changed.
+    </div>
+
+    <div id="t2" class="text">
+      I love you so much ❤️<br>
+      You make me feel so lucky.
+    </div>
+
+    <div id="t3" class="text">
+      Choosing you is my easiest decision.
+    </div>
+
+    <div id="t4" class="text final">
+      Will you marry me? 💍
+    </div>
+
+    <div id="t5" class="text final">
+      He said YES 💍❤️<br>
+      This is our forever ✨
+    </div>
+
+    <button id="btn" onclick="next()">Press here ❤️</button>
   </div>
 
-  <div id="t1" class="text">From the moment you came into my life,</div>
-  <div id="t2" class="text">everything became brighter and warmer.</div>
-  <div id="t3" class="text">I love you so much ❤️<br>You make me feel so lucky.</div>
-  <div id="t4" class="text">So today, I just want to ask…</div>
-  <div id="t5" class="text final">Will you marry me? 💍</div>
-  <div id="t6" class="text final">He said YES 💍❤️</div>
-
-  <audio id="music" preload="auto">
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4c3f2f8a42.mp3" type="audio/mpeg">
-  </audio>
-
   <script>
-    window.onload = function () {
-      const btn = document.getElementById("startBtn");
-      const music = document.getElementById("music");
+    let step = 0;
+    const texts = ["t0","t1","t2","t3","t4","t5"];
 
-      btn.onclick = function () {
-        document.getElementById("start").style.display = "none";
+    function next() {
+      if (step < texts.length - 1) {
+        document.getElementById(texts[step]).style.display = "none";
+        step++;
+        document.getElementById(texts[step]).style.display = "block";
+      }
 
-        try { music.play(); } catch(e) {}
-
-        setInterval(() => createHeart(), 400);
-
-        setTimeout(() => show("t1"), 2000);
-        setTimeout(() => show("t2"), 10000);
-        setTimeout(() => show("t3"), 20000);
-        setTimeout(() => show("t4"), 32000);
-        setTimeout(() => show("t5"), 50000);
-        setTimeout(() => show("t6"), 58000);
-      };
-    };
-
-    function show(id) {
-      const el = document.getElementById(id);
-      if (el) el.classList.add("show");
+      if (step === texts.length - 1) {
+        document.getElementById("btn").style.display = "none";
+        setInterval(createHeart, 300);
+      }
     }
 
     function createHeart() {
@@ -121,7 +119,7 @@
       h.innerHTML = "❤️";
       h.style.left = Math.random() * 100 + "vw";
       document.body.appendChild(h);
-      setTimeout(() => h.remove(), 6000);
+      setTimeout(() => h.remove(), 5000);
     }
   </script>
 
