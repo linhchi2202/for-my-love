@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Min Min ❤️</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(#ffe6ee, #ffffff);
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .box {
+      text-align: center;
+      padding: 20px;
+      max-width: 90%;
+    }
+
+    .text {
+      font-size: 30px;
+      color: #ff4d6d;
+      display: none;
+      line-height: 1.6;
+    }
+
+    .final {
+      font-size: 42px;
+      font-weight: bold;
+      color: #ff1493;
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 14px 36px;
+      font-size: 20px;
+      border: none;
+      border-radius: 30px;
+      background: #ff4d6d;
+      color: white;
+      cursor: pointer;
+    }
+
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 22px;
+      animation: floatUp 5s linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      to {
+        transform: translateY(-120vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+    <div id="t0" class="text" style="display:block">
+      Hey Min Min 💖
+    </div>
+
+    <div id="t1" class="text">
+      From the moment you came into my life,<br>
+      everything changed.
+    </div>
+
+    <div id="t2" class="text">
+      I love you so much ❤️<br>
+      You make me feel so lucky.
+    </div>
+
+    <div id="t3" class="text">
+      Choosing you is my easiest decision.
+    </div>
+
+    <div id="t4" class="text final">
+      Will you marry me? 💍
+    </div>
+
+    <div id="t5" class="text final">
+      He said YES 💍❤️<br>
+      This is our forever ✨
+    </div>
+
+    <button id="btn" onclick="next()">Press here ❤️</button>
+  </div>
+
+  <!-- 🎵 NHẠC LOCAL (UPLOAD TRONG REPO) -->
+  <audio id="music" preload="auto">
+    <source src="photograph.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    let step = 0;
+    const texts = ["t0","t1","t2","t3","t4","t5"];
+    let musicStarted = false;
+
+    function next() {
+      const music = document.getElementById("music");
+
+      // phát nhạc lần đầu
+      if (!musicStarted) {
+        music.volume = 0.8;
+        music.play().catch(() => {});
+        musicStarted = true;
+      }
+
+      if (step < texts.length - 1) {
+        document.getElementById(texts[step]).style.display = "none";
+        step++;
+        document.getElementById(texts[step]).style.display = "block";
+      }
+
+      // tới đoạn cuối
+      if (step === texts.length - 1) {
+        document.getElementById("btn").style.display = "none";
+        setInterval(createHeart, 300);
+      }
+    }
+
+    function createHeart() {
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.innerHTML = "❤️";
+      h.style.left = Math.random() * 100 + "vw";
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 5000);
+    }
+  </script>
+
+</body>
+</html>
