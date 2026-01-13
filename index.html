@@ -2,48 +2,57 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Will You Marry Me ❤️</title>
+  <title>For Min Min ❤️</title>
 
   <style>
     body {
       margin: 0;
       height: 100vh;
-      background: linear-gradient(#ffe6ee, #ffffff);
+      background: radial-gradient(circle, #ffe6ee, #ffffff);
       font-family: Arial, sans-serif;
       text-align: center;
       overflow: hidden;
+      padding: 20px;
     }
 
-    h1 {
-      margin-top: 120px;
-      font-size: 48px;
+    .text {
+      font-size: 34px;
       color: #ff4d6d;
       opacity: 0;
-      transition: opacity 1.5s;
+      transition: opacity 2s, transform 2s;
+      margin-top: 120px;
+      line-height: 1.6;
+      transform: translateY(30px);
     }
 
-    h2 {
-      font-size: 36px;
+    .show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .small {
+      font-size: 28px;
       color: #ff6b81;
-      opacity: 0;
-      transition: opacity 1.5s;
+    }
+
+    .final {
+      font-size: 50px;
+      font-weight: bold;
+      color: #ff1493;
+      text-shadow: 0 0 25px pink;
     }
 
     button {
       margin-top: 40px;
-      padding: 14px 32px;
+      padding: 14px 36px;
       font-size: 20px;
       border: none;
       border-radius: 30px;
       background: #ff4d6d;
       color: white;
       cursor: pointer;
-    }
-
-    #yesBtn {
-      display: none;
-      background: #ff1493;
-      margin-left: 10px;
+      position: relative;
+      z-index: 10;
     }
 
     .heart {
@@ -51,16 +60,25 @@
       bottom: -20px;
       font-size: 24px;
       animation: floatUp 6s linear forwards;
-      color: #ff4d6d;
+      pointer-events: none;
     }
 
     @keyframes floatUp {
-      0% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-110vh);
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-120vh); opacity: 0; }
+    }
+
+    .confetti {
+      position: fixed;
+      top: -10px;
+      font-size: 22px;
+      animation: fall 4s linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(720deg);
         opacity: 0;
       }
     }
@@ -69,33 +87,69 @@
 
 <body>
 
-  <h1 id="question">Will you marry me? 💍</h1>
-  <h2 id="answer">I love you forever ❤️</h2>
+  <div id="s1" class="text">
+    Hey Min Min 💖<br>
+    From the moment you came into my life,
+  </div>
 
-  <button id="startBtn" onclick="start()">Press here ❤️</button>
-  <button id="yesBtn" onclick="sayYes()">Yes, I do 💍</button>
+  <div id="s2" class="text small">
+    everything became brighter,<br>
+    warmer, and full of meaning.
+  </div>
 
-  <!-- Nhạc nền -->
-  <audio id="music" loop>
-    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+  <div id="s3" class="text">
+    I love you so much ❤️<br>
+    You make me feel like the luckiest person alive.
+  </div>
+
+  <div id="s4" class="text small">
+    Loving you is my favorite thing,<br>
+    choosing you is my easiest decision.
+  </div>
+
+  <div id="s5" class="text final">
+    Will you marry me? 💍
+  </div>
+
+  <div id="s6" class="text final">
+    He said YES 💍❤️<br>
+    And this is our forever ✨
+  </div>
+
+  <button id="btn" onclick="start()">Press here ❤️</button>
+
+  <!-- 🎵 Photograph-style instrumental -->
+  <audio id="music">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4c3f2f8a42.mp3" type="audio/mpeg">
   </audio>
 
   <script>
     let heartInterval;
+    let confettiInterval;
 
     function start() {
-      document.getElementById("question").style.opacity = 1;
-      document.getElementById("yesBtn").style.display = "inline-block";
-      document.getElementById("startBtn").style.display = "none";
+      const music = document.getElementById("music");
+      music.play();
+      document.getElementById("btn").style.display = "none";
 
-      document.getElementById("music").play();
+      heartInterval = setInterval(createHeart, 350);
 
-      heartInterval = setInterval(createHeart, 300);
+      // ⏱ TIMELINE (tính bằng mili-giây)
+      setTimeout(() => show("s1"), 2000);    // 0–2s
+      setTimeout(() => show("s2"), 12000);   // 12s
+      setTimeout(() => show("s3"), 24000);   // 24s
+      setTimeout(() => show("s4"), 38000);   // 38s
+
+      // 🎶 ĐIỆP KHÚC (~58s)
+      setTimeout(() => show("s5"), 56000);   // Will you marry me
+      setTimeout(() => {
+        show("s6");                          // He said YES
+        confettiInterval = setInterval(createConfetti, 120);
+      }, 62000);
     }
 
-    function sayYes() {
-      document.getElementById("answer").style.opacity = 1;
-      document.getElementById("question").innerText = "He said YES 💍❤️";
+    function show(id) {
+      document.getElementById(id).classList.add("show");
     }
 
     function createHeart() {
@@ -103,10 +157,19 @@
       heart.className = "heart";
       heart.innerHTML = "❤️";
       heart.style.left = Math.random() * 100 + "vw";
-      heart.style.fontSize = (20 + Math.random() * 30) + "px";
+      heart.style.fontSize = (18 + Math.random() * 32) + "px";
       document.body.appendChild(heart);
-
       setTimeout(() => heart.remove(), 6000);
+    }
+
+    function createConfetti() {
+      const confetti = document.createElement("div");
+      confetti.className = "confetti";
+      confetti.innerHTML = ["💖","💍","✨","🎉","❤️"][Math.floor(Math.random()*5)];
+      confetti.style.left = Math.random() * 100 + "vw";
+      confetti.style.fontSize = (18 + Math.random() * 26) + "px";
+      document.body.appendChild(confetti);
+      setTimeout(() => confetti.remove(), 4000);
     }
   </script>
 
